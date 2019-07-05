@@ -10,7 +10,18 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        leading: IconButton(
+          icon: Icon(Icons.camera_alt),
+          onPressed: () {},
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {},
+          )
+        ],
+        centerTitle: true,
+        title: Text('come_in'),
       ),
       body: ListView(children: []),
     );

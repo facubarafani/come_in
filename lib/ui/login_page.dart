@@ -31,7 +31,9 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: EdgeInsets.only(top: 15, left: 240),
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed('/home');
+                },
                 child: Text('Sign In'),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
