@@ -98,7 +98,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        centerTitle: true,
+        title: Text('come_in'),
       ),
       body: PageView(
         scrollDirection: Axis.vertical,
