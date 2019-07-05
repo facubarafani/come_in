@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return ComeInProvider(
       child: MaterialApp(
         title: 'come_in',
-        darkTheme: ThemeData(
+        theme: ThemeData(
           brightness: Brightness.dark,
         ),
         home: LoginPage(),
