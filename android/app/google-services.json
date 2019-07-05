@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "296288556724",
+    "firebase_url": "https://comein-d6eca.firebaseio.com",
+    "project_id": "comein-d6eca",
+    "storage_bucket": "comein-d6eca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296288556724:android:9907aa4b73fd22ed",
+        "android_client_info": {
+          "package_name": "com.example.come_in"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296288556724-i5japdqdv6orqmq27pc7khsrirf4bak1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB3zohuKvm7_sBiiSFMQrEO1y-7KYJCRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296288556724-i5japdqdv6orqmq27pc7khsrirf4bak1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
