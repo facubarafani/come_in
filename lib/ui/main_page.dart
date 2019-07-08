@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'camera_page.dart';
 import 'events_page.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
+var cameras;
+MainPage(this.cameras);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -22,7 +23,7 @@ final controller = PageController(
       body: PageView(
         controller: controller,
         children: [
-        CameraPage(),
+        CameraPage(widget.cameras),
         HomePage(),
         EventPage(),
       ]),
