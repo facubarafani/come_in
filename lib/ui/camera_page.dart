@@ -9,10 +9,9 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Camera'),
-      ),
-      body: ListView(children: []),
+      body: ListView(children: [
+        Text('Testing')
+      ]),
     );
   }
 }
