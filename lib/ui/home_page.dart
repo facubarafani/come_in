@@ -14,7 +14,13 @@ Widget _buildUserCard() {
         child: Padding(
           padding: EdgeInsets.all(15),
           child: Wrap(
-            children: [Text('User'), Divider()],
+            children: [
+              Text(
+                'User will appear here',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Divider()
+            ],
           ),
         ),
       )
