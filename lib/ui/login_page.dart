@@ -9,6 +9,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget _buildLogin() {
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       margin: EdgeInsets.all(15),
       child: Padding(
         padding: EdgeInsets.all(15),
@@ -28,17 +29,22 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 15, left: 240),
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/main');
-                },
-                child: Text('Sign In'),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-              ),
-            )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed('/main');
+                    },
+                    child: Text('Sign In'),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -47,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildRegisterText() {
     return Padding(
-      padding: EdgeInsets.only(top: 280),
+      padding: EdgeInsets.all(8),
       child: Column(
         children: [
           Icon(Icons.arrow_drop_up),
@@ -61,6 +67,8 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       children: [
         Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           margin: EdgeInsets.all(15),
           child: Padding(
             padding: EdgeInsets.all(15),
@@ -80,14 +88,19 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 15, left: 240),
-                  child: RaisedButton(
-                    onPressed: () {},
-                    child: Text('Sign In'),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: RaisedButton(
+                        onPressed: () {},
+                        child: Text('Sign In'),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),

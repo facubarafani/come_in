@@ -12,10 +12,17 @@ class _EventPageState extends State<EventPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Events'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+          },
+        ),
       ),
       body: ListView(children: []),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/createevent');
+        },
         child: Icon(Icons.add),
       ),
     );
