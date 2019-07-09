@@ -1,6 +1,8 @@
 import 'package:come_in/models/event.dart';
 import 'package:flutter/material.dart';
 
+import 'edit_event_page.dart';
+
 class EventDetailPage extends StatefulWidget {
   final ComeInEvent event;
   EventDetailPage({Key key, this.event}) : super(key: key);
@@ -85,7 +87,15 @@ class _EventDetailPageState extends State<EventDetailPage> {
       ),
       body: Container(child: _buildEventDetail()),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => EditEventPage(
+                event: widget.event,
+              ),
+            ),
+          );
+        },
         child: Icon(Icons.edit),
       ),
     );

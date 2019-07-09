@@ -28,6 +28,14 @@ class ComeInBloc {
     });
   }
 
+    Future editEvent(title, description, location) async {
+    _database.child('events').push().update({
+      'title': title,
+      'description': description,
+      'location': location,
+    });
+  }
+
   dispose() {
     _subject.close();
     this.dispose();

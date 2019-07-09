@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:come_in/providers/comein_provider.dart';
 import 'package:come_in/ui/camera_page.dart';
 import 'package:come_in/ui/create_event_page.dart';
+import 'package:come_in/ui/edit_event_page.dart';
 import 'package:come_in/ui/events_page.dart';
 import 'package:come_in/ui/home_page.dart';
 import 'package:come_in/ui/login_page.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
           '/events': (BuildContext context) => EventPage(),
           '/main': (BuildContext context) => MainPage(cameras),
           '/createevent': (BuildContext context) => CreateEventPage(),
+          '/editevent': (BuildContext context) => EditEventPage(),
         },
       ),
     );
