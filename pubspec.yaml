@@ -21,6 +21,7 @@ dependencies:
     sdk: flutter
   rxdart: ^0.22.0
   camera: any
+  firebase_database: ^3.0.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

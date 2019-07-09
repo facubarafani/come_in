@@ -1,51 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:come_in/bloc/comein_bloc.dart';
+import 'package:come_in/models/event.dart';
+import 'package:come_in/providers/comein_provider.dart';
 
 class EventPage extends StatefulWidget {
   @override
   _EventPageState createState() => _EventPageState();
 }
 
-Widget _buildEventCard() {
-  return Column(
-    children: [
-      Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        margin: EdgeInsets.all(15),
-        child: Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Wrap(
-            children: [
-              Text(
-                'Event name will appear here',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Divider(),
-              Text('Event description will appear here'),
-              Divider(),
-              Row(
-                children: [
-                  Icon(Icons.location_on),
-                  Text('Event location will appear here'),
-                ],
-              ),
-              Divider(),
-              Row(
-                children: [
-                  Icon(Icons.calendar_today),
-                  Text('Event date will appear here'),
-                ],
-              )
-            ],
+Widget _buildEventList(List<ComeInEvent> list) {
+  return ListView.builder(
+    itemCount: list.length,
+    itemBuilder: (BuildContext context, int index) {
+      ComeInEvent events = list[index];
+      return Container(
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          margin: EdgeInsets.all(15),
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Wrap(
+              children: [
+                Text(
+                  '${events.title}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Divider(),
+                Text('${events.description}'),
+                Divider(),
+                Row(
+                  children: [
+                    Icon(Icons.location_on),
+                    Text('${events.location}'),
+                  ],
+                ),
+                Divider(),
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today),
+                    Text('Event date will appear here'),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
-      )
-    ],
+      );
+    },
   );
 }
 
 class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
+    ComeInBloc comeInBloc = ComeInProvider.of(context).comeInBloc;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -55,7 +65,15 @@ class _EventPageState extends State<EventPage> {
           onPressed: () {},
         ),
       ),
-      body: ListView(children: [_buildEventCard()]),
+      body: 
+        StreamBuilder(
+          stream: comeInBloc.events,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return snapshot.hasData
+                ? _buildEventList(snapshot.data)
+                : Center(child: CircularProgressIndicator());
+          },
+        ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed('/createevent');

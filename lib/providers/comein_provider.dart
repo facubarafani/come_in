@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:come_in/bloc/comein_bloc.dart';
 
 class ComeInProvider extends InheritedWidget {
-
+  final ComeInBloc comeInBloc;
 
   ComeInProvider({
+    this.comeInBloc,
     Widget child,
   }) : super(child: child);
 
