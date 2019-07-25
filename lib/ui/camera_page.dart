@@ -38,7 +38,11 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget build(BuildContext context) {
-        return Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('QR Scanner'),
+      ),
       body: Center(
         child: Text(
           result,

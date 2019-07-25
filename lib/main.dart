@@ -1,4 +1,5 @@
 import 'package:come_in/providers/comein_provider.dart';
+import 'package:come_in/ui/add_guest_page.dart';
 import 'package:come_in/ui/camera_page.dart';
 import 'package:come_in/ui/create_event_page.dart';
 import 'package:come_in/ui/edit_event_page.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           '/main': (BuildContext context) => MainPage(),
           '/createevent': (BuildContext context) => CreateEventPage(),
           '/editevent': (BuildContext context) => EditEventPage(),
+          '/addguest': (BuildContext context) => AddGuestPage(),
         },
       ),
     );

@@ -20,8 +20,9 @@ class ComeInBloc {
       },
     );
   }
+
   Future testGetKey() async {
-    _database.child('events').onChildAdded.listen((snapshot){
+    _database.child('events').onChildAdded.listen((snapshot) {
       print(snapshot.snapshot.key);
     });
   }
@@ -40,6 +41,13 @@ class ComeInBloc {
       'title': title,
       'description': description,
       'location': location,
+    });
+  }
+
+  Future createGuest(firstName, lastName, String id) async {
+    _database.child('events').child(id).child('guests').push().set({
+      'firstName': firstName,
+      'lastName': lastName,
     });
   }
 
