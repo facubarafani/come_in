@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:come_in/bloc/comein_bloc.dart';
 import 'package:come_in/models/event.dart';
@@ -10,61 +11,72 @@ class EventPage extends StatefulWidget {
   _EventPageState createState() => _EventPageState();
 }
 
-Widget _buildEventList(List<ComeInEvent> list) {
-  return ListView.builder(
-    itemCount: list.length,
-    itemBuilder: (BuildContext context, int index) {
-      ComeInEvent events = list[index];
-      return Container(
-        child: GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => EventDetailPage(
-                  event: list[index],
+class _EventPageState extends State<EventPage> {
+  void initState() {
+    final DatabaseReference _database = FirebaseDatabase.instance.reference();
+    _database.child('events').onChildAdded.listen((snapshot) {
+      _database.child('events').child(snapshot.snapshot.key).update({
+        'id': snapshot.snapshot.key,
+      });
+      print(snapshot.snapshot.key);
+    });
+  }
+
+  Widget _buildEventList(List<ComeInEvent> list) {
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (BuildContext context, int index) {
+        ComeInEvent events = list[index];
+        return Container(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => EventDetailPage(
+                    event: list[index],
+                  ),
                 ),
-              ),
-            );
-          },
-          child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            margin: EdgeInsets.all(15),
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Wrap(
-                children: [
-                  Text(
-                    '${events.title}',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Divider(),
-                  Text('${events.description}'),
-                  Divider(),
-                  Row(
-                    children: [
-                      Icon(Icons.location_on),
-                      Text('${events.location}'),
-                    ],
-                  ),
-                  Divider(),
-                  Row(
-                    children: [
-                      Icon(Icons.calendar_today),
-                      Text('Event date will appear here'),
-                    ],
-                  )
-                ],
+              );
+            },
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              margin: EdgeInsets.all(15),
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Wrap(
+                  children: [
+                    Text(
+                      '${events.title}',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Divider(),
+                    Text('${events.description}'),
+                    Divider(),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on),
+                        Text('${events.location}'),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      children: [
+                        Icon(Icons.calendar_today),
+                        Text('Event date will appear here'),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    },
-  );
-}
+        );
+      },
+    );
+  }
 
-class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     ComeInBloc comeInBloc = ComeInProvider.of(context).comeInBloc;

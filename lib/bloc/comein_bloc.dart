@@ -19,19 +19,10 @@ class ComeInBloc {
         'location': location,
       },
     );
-    getKey();
   }
-
-  Future getKey() async {
-    _database
-        .child('events')
-        .orderByChild("score")
-        .once()
-        .then((DataSnapshot snapshot) {
-      final value = snapshot.value;
-      for (final key in value.keys) {
-        print(key);
-      }
+  Future testGetKey() async {
+    _database.child('events').onChildAdded.listen((snapshot){
+      print(snapshot.snapshot.key);
     });
   }
 
