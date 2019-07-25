@@ -7,7 +7,7 @@ class ComeInEvent {
   String location;
   // List<Guest> guests;
 
-  ComeInEvent({this.title, this.description, this.location});
+  ComeInEvent({this.id, this.title, this.description, this.location});
 
   factory ComeInEvent.fromJson(json) {
     // List<Guest> list = [];
@@ -20,6 +20,7 @@ class ComeInEvent {
       title: json['title'],
       description: json['description'],
       location: json['location'],
+      id: json['id'],
       // guests: list,
     );
   }

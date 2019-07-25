@@ -35,8 +35,8 @@ class ComeInBloc {
     });
   }
 
-  Future editEvent(title, description, location) async {
-    _database.child('events').update({
+  Future editEvent(title, description, location, String id) async {
+    _database.child('events').child(id).update({
       'title': title,
       'description': description,
       'location': location,
