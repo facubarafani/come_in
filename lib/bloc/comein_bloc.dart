@@ -4,7 +4,6 @@ import 'package:rxdart/rxdart.dart';
 
 class ComeInBloc {
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
-
   final _subject = BehaviorSubject<List<ComeInEvent>>();
   Stream<List<ComeInEvent>> get events => _subject.stream;
 
@@ -20,6 +19,20 @@ class ComeInBloc {
         'location': location,
       },
     );
+    getKey();
+  }
+
+  Future getKey() async {
+    _database
+        .child('events')
+        .orderByChild("score")
+        .once()
+        .then((DataSnapshot snapshot) {
+      final value = snapshot.value;
+      for (final key in value.keys) {
+        print(key);
+      }
+    });
   }
 
   Future getEvents() async {

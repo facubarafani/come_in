@@ -1,6 +1,7 @@
 import 'guest.dart';
 
 class ComeInEvent {
+  var id;
   String title;
   String description;
   String location;
