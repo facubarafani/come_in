@@ -4,26 +4,18 @@ import 'events_page.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
-var cameras;
-MainPage(this.cameras);
-
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-
-final controller = PageController(
-  initialPage: 1
-);
+  final controller = PageController(initialPage: 1);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: controller,
-        children: [
-        CameraPage(widget.cameras),
+      body: PageView(controller: controller, children: [
+        CameraPage(),
         HomePage(),
         EventPage(),
       ]),

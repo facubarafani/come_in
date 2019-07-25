@@ -33,7 +33,7 @@ class _EditEventPageState extends State<EditEventPage> {
               var editTitle = _editTitleController.text;
               var editDescription = _editDescriptionController.text;
               var editLocation = _editLocationController.text;
-              comeInBloc.editEvent(editTitle, editDescription, editLocation);
+              comeInBloc.editEvent(editTitle, editDescription, editLocation,);
             },
           )
         ],

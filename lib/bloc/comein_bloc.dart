@@ -13,23 +13,26 @@ class ComeInBloc {
   }
 
   Future createEvent(title, description, location) async {
-    _database.child('events').push().set({
-      'title': title,
-      'description': description,
-      'location': location,
-    });
+    _database.child('events').push().set(
+      {
+        'title': title,
+        'description': description,
+        'location': location,
+      },
+    );
   }
 
   Future getEvents() async {
     _database.child('events').once().then((snapshot) {
       List<ComeInEvent> list = [];
-      snapshot.value.forEach((key, value) => list.add(ComeInEvent.fromJson(value)));
+      snapshot.value
+          .forEach((key, value) => list.add(ComeInEvent.fromJson(value)));
       _subject.sink.add(list);
     });
   }
 
-    Future editEvent(title, description, location) async {
-    _database.child('events').push().update({
+  Future editEvent(title, description, location) async {
+    _database.child('events').update({
       'title': title,
       'description': description,
       'location': location,
