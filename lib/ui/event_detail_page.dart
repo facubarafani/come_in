@@ -18,6 +18,16 @@ class EventDetailPage extends StatefulWidget {
 
 class _EventDetailPageState extends State<EventDetailPage> {
   @override
+  void initState() {
+    final DatabaseReference _database = FirebaseDatabase.instance.reference();
+    _database.child('events').child(widget.event.id).child('guests').onChildAdded.listen((snapshot) {
+      _database.child('events').child(widget.event.id).child('guests').child(snapshot.snapshot.key).update({
+        'id': snapshot.snapshot.key,
+      });
+      print(snapshot.snapshot.key);
+    });
+  }
+
   Widget _buildEventDetail() {
     return Card(
       margin: EdgeInsets.all(10),
@@ -114,10 +124,6 @@ class _EventDetailPageState extends State<EventDetailPage> {
               ],
             ),
             Divider(),
-            Text(
-              'No guests invited yet',
-              style: TextStyle(color: Colors.grey, fontSize: 15),
-            ),
           ],
         ),
       ),
@@ -142,27 +148,24 @@ class _EventDetailPageState extends State<EventDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Guests',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  Divider(),
-                  Text(
-                    'Nombre',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  ),
-                  Text(
-                    guests.firstName,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Divider(),
-                  Text(
-                    'Apellido',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  ),
-                  Text(
-                    guests.lastName,
-                    style: TextStyle(fontSize: 18),
+                  Row(
+                    children: [
+                      Icon(Icons.person),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        guests.firstName,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        guests.lastName,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -190,10 +193,15 @@ class _EventDetailPageState extends State<EventDetailPage> {
           child: Column(
         children: [
           Expanded(
+            flex: 2,
             child: _buildEventDetail(),
           ),
-          // _buildGuestList(),
           Expanded(
+            flex: 1,
+            child: _buildGuestList(),
+          ),
+          Expanded(
+            flex: 2,
             child: StreamBuilder(
               stream: guestBloc.guests,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
