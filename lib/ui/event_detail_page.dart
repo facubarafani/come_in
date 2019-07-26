@@ -2,10 +2,10 @@ import 'package:come_in/bloc/comein_bloc.dart';
 import 'package:come_in/bloc/guest_bloc.dart';
 import 'package:come_in/models/event.dart';
 import 'package:come_in/models/guest.dart';
+import 'guest_detail_page.dart';
 import 'package:come_in/providers/comein_provider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
 import 'add_guest_page.dart';
 import 'edit_event_page.dart';
 
@@ -20,8 +20,18 @@ class _EventDetailPageState extends State<EventDetailPage> {
   @override
   void initState() {
     final DatabaseReference _database = FirebaseDatabase.instance.reference();
-    _database.child('events').child(widget.event.id).child('guests').onChildAdded.listen((snapshot) {
-      _database.child('events').child(widget.event.id).child('guests').child(snapshot.snapshot.key).update({
+    _database
+        .child('events')
+        .child(widget.event.id)
+        .child('guests')
+        .onChildAdded
+        .listen((snapshot) {
+      _database
+          .child('events')
+          .child(widget.event.id)
+          .child('guests')
+          .child(snapshot.snapshot.key)
+          .update({
         'id': snapshot.snapshot.key,
       });
       print(snapshot.snapshot.key);
@@ -135,39 +145,49 @@ class _EventDetailPageState extends State<EventDetailPage> {
       itemCount: data.length,
       itemBuilder: (BuildContext context, int index) {
         Guest guests = data[index];
-
         return Container(
-          child: Card(
-            margin: EdgeInsets.all(15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 6,
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.person),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        guests.firstName,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        guests.lastName,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => GuestDetailPage(
+                    guest: data[index],
                   ),
-                ],
+                ),
+              );
+            },
+            child: Card(
+              margin: EdgeInsets.all(6),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              elevation: 6,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.person),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          guests.firstName,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          guests.lastName,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
