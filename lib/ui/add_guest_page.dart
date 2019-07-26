@@ -1,4 +1,5 @@
 import 'package:come_in/bloc/comein_bloc.dart';
+import 'package:come_in/bloc/guest_bloc.dart';
 import 'package:come_in/models/event.dart';
 import 'package:come_in/providers/comein_provider.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _AddGuestPageState extends State<AddGuestPage> {
 
   @override
   Widget build(BuildContext context) {
-    ComeInBloc comeInBloc = ComeInProvider.of(context).comeInBloc;
+    GuestBloc guestBloc = ComeInProvider.of(context).guestBloc;
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +51,7 @@ class _AddGuestPageState extends State<AddGuestPage> {
             onPressed: () {
               var firstName = _firstNameController.text;
               var lastName = _lastNameController.text;
-              comeInBloc.createGuest(firstName, lastName, widget.event.id);
+              guestBloc.createGuest(firstName, lastName, widget.event.id);
             },
           )
         ],

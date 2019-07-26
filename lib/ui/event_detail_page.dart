@@ -1,4 +1,9 @@
+import 'package:come_in/bloc/comein_bloc.dart';
+import 'package:come_in/bloc/guest_bloc.dart';
 import 'package:come_in/models/event.dart';
+import 'package:come_in/models/guest.dart';
+import 'package:come_in/providers/comein_provider.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'add_guest_page.dart';
@@ -103,7 +108,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                         );
                       },
                       icon: Icon(Icons.add),
-                    )
+                    ),
                   ],
                 ),
               ],
@@ -119,7 +124,58 @@ class _EventDetailPageState extends State<EventDetailPage> {
     );
   }
 
+  _buildGuest(List data) {
+    return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (BuildContext context, int index) {
+        Guest guests = data[index];
+
+        return Container(
+          child: Card(
+            margin: EdgeInsets.all(15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            elevation: 6,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Guests',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Divider(),
+                  Text(
+                    'Nombre',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
+                  Text(
+                    guests.firstName,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Divider(),
+                  Text(
+                    'Apellido',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
+                  Text(
+                    guests.lastName,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget build(BuildContext context) {
+    GuestBloc guestBloc = ComeInProvider.of(context).guestBloc;
+    guestBloc.getGuest(widget.event.id);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.event.title),
@@ -130,9 +186,25 @@ class _EventDetailPageState extends State<EventDetailPage> {
           )
         ],
       ),
-      body: ListView(
-        children: [_buildEventDetail(), _buildGuestList()],
-      ),
+      body: Container(
+          child: Column(
+        children: [
+          Expanded(
+            child: _buildEventDetail(),
+          ),
+          // _buildGuestList(),
+          Expanded(
+            child: StreamBuilder(
+              stream: guestBloc.guests,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                return snapshot.hasData
+                    ? _buildGuest(snapshot.data)
+                    : Center(child: CircularProgressIndicator());
+              },
+            ),
+          ),
+        ],
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(

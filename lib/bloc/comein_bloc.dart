@@ -1,4 +1,5 @@
 import 'package:come_in/models/event.dart';
+import 'package:come_in/models/guest.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -6,7 +7,6 @@ class ComeInBloc {
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
   final _subject = BehaviorSubject<List<ComeInEvent>>();
   Stream<List<ComeInEvent>> get events => _subject.stream;
-
   ComeInBloc() {
     getEvents();
   }
@@ -41,13 +41,6 @@ class ComeInBloc {
       'title': title,
       'description': description,
       'location': location,
-    });
-  }
-
-  Future createGuest(firstName, lastName, String id) async {
-    _database.child('events').child(id).child('guests').push().set({
-      'firstName': firstName,
-      'lastName': lastName,
     });
   }
 

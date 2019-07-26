@@ -9,6 +9,7 @@ import 'package:come_in/ui/login_page.dart';
 import 'package:come_in/ui/main_page.dart';
 import 'package:flutter/material.dart';
 import 'bloc/comein_bloc.dart';
+import 'bloc/guest_bloc.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ComeInProvider(
       comeInBloc: ComeInBloc(),
+      guestBloc: GuestBloc(),
       child: MaterialApp(
         title: 'come_in',
         theme: ThemeData(
