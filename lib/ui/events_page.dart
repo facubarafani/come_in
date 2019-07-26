@@ -17,7 +17,6 @@ class _EventPageState extends State<EventPage> {
       _database.child('events').child(snapshot.snapshot.key).update({
         'id': snapshot.snapshot.key,
       });
-      print(snapshot.snapshot.key);
     });
   }
 

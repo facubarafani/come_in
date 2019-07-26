@@ -1,4 +1,3 @@
-import 'package:come_in/bloc/comein_bloc.dart';
 import 'package:come_in/bloc/guest_bloc.dart';
 import 'package:come_in/models/event.dart';
 import 'package:come_in/providers/comein_provider.dart';

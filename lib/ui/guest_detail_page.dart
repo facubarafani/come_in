@@ -1,13 +1,6 @@
-import 'package:come_in/bloc/comein_bloc.dart';
-import 'package:come_in/bloc/guest_bloc.dart';
-import 'package:come_in/models/event.dart';
 import 'package:come_in/models/guest.dart';
-import 'package:come_in/providers/comein_provider.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'add_guest_page.dart';
-import 'edit_event_page.dart';
 
 class GuestDetailPage extends StatefulWidget {
   final Guest guest;
@@ -62,7 +55,7 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
   }
 
   Widget build(BuildContext context) {
-    var guestFullName = widget.guest.firstName+' '+widget.guest.lastName;
+    var guestFullName = widget.guest.firstName + ' ' + widget.guest.lastName;
     return Scaffold(
       appBar: AppBar(
         title: Text(guestFullName),
@@ -76,14 +69,18 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
       body: Container(
         child: Column(
           children: [
-            Expanded(
-              flex: 2,
-              child: _builGuestDetail(),),
-            Expanded(
-              child: Container(
-                child: QrImage(data: widget.guest.id, size: 200,backgroundColor: Colors.white,),
+            _builGuestDetail(),
+            SizedBox(
+              height: 220,
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: QrImage(
+                data: widget.guest.id,
+                size: 200,
+                backgroundColor: Colors.white,
               ),
-            )
+            ),
           ],
         ),
       ),

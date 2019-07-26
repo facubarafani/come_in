@@ -1,4 +1,3 @@
-import 'package:come_in/bloc/comein_bloc.dart';
 import 'package:come_in/bloc/guest_bloc.dart';
 import 'package:come_in/models/event.dart';
 import 'package:come_in/models/guest.dart';
@@ -34,7 +33,6 @@ class _EventDetailPageState extends State<EventDetailPage> {
           .update({
         'id': snapshot.snapshot.key,
       });
-      print(snapshot.snapshot.key);
     });
   }
 
@@ -212,14 +210,8 @@ class _EventDetailPageState extends State<EventDetailPage> {
       body: Container(
           child: Column(
         children: [
-          Expanded(
-            flex: 2,
-            child: _buildEventDetail(),
-          ),
-          Expanded(
-            flex: 1,
-            child: _buildGuestList(),
-          ),
+          _buildEventDetail(),
+          _buildGuestList(),
           Expanded(
             flex: 2,
             child: StreamBuilder(

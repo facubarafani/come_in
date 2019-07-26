@@ -1,5 +1,3 @@
-import 'guest.dart';
-
 class ComeInEvent {
   var id;
   String title;

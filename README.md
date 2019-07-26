@@ -12,3 +12,6 @@ Se crearan eventos en los cuales se asignaran los invitados, los cuales recibira
 | ------------- | ------------- |
 | Firebase      | Base de datos |
 |Flutter         | Framework dart para creacion de apps moviles |
+|qr_flutter     | Generar codigos QR|
+|barcode_scanner | Leer codigos QR|
+|share           | Compartir QR en RS|

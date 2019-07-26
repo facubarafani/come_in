@@ -1,5 +1,4 @@
 import 'package:come_in/models/event.dart';
-import 'package:come_in/models/guest.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -19,12 +18,6 @@ class ComeInBloc {
         'location': location,
       },
     );
-  }
-
-  Future testGetKey() async {
-    _database.child('events').onChildAdded.listen((snapshot) {
-      print(snapshot.snapshot.key);
-    });
   }
 
   Future getEvents() async {
