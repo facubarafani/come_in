@@ -1,6 +1,7 @@
 import 'package:come_in/models/guest.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share/share.dart';
 
 class GuestDetailPage extends StatefulWidget {
   final Guest guest;
@@ -74,7 +75,9 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
               height: 220,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                
+              },
               child: QrImage(
                 data: widget.guest.id,
                 size: 200,

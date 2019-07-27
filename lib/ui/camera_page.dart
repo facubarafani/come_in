@@ -1,6 +1,11 @@
+import 'package:come_in/bloc/comein_bloc.dart';
+import 'package:come_in/models/event.dart';
+import 'package:come_in/providers/comein_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
+
+import 'event_qr_page.dart';
 
 class CameraPage extends StatefulWidget {
   @override
@@ -9,52 +14,99 @@ class CameraPage extends StatefulWidget {
 
 class _CameraPageState extends State<CameraPage> {
   @override
-  String result = "";
-  Future _scanQR() async {
-    try {
-      String qrResult = await BarcodeScanner.scan();
-      setState(() {
-        result = qrResult;
-      });
-    } on PlatformException catch (ex) {
-      if (ex.code == BarcodeScanner.CameraAccessDenied) {
-        setState(() {
-          result = "Camera permission was denied";
-        });
-      } else {
-        setState(() {
-          result = "Unknown Error $ex";
-        });
-      }
-    } on FormatException {
-      setState(() {
-        result = "You pressed the back button before scanning anything";
-      });
-    } catch (ex) {
-      setState(() {
-        result = "Unknown Error $ex";
-      });
-    }
+  Widget _buildEventList(List<ComeInEvent> list) {
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (BuildContext context, int index) {
+        ComeInEvent events = list[index];
+        return Container(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => EventQRPage(
+                    event: list[index],
+                  ),
+                ),
+              );
+            },
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              margin: EdgeInsets.all(15),
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Wrap(
+                  children: [
+                    Text(
+                      '${events.title}',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Divider(),
+                    Text('${events.description}'),
+                    Divider(),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on),
+                        Text('${events.location}'),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      children: [
+                        Icon(Icons.calendar_today),
+                        Text('Event date will appear here'),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget build(BuildContext context) {
+    ComeInBloc comeInBloc = ComeInProvider.of(context).comeInBloc;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('QR Scanner'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.arrow_back_ios,
+              textDirection: TextDirection.rtl,
+            ),
+          )
+        ],
       ),
-      body: Center(
-        child: Text(
-          result,
-          style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-        ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'Select an event to scan QRs',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder(
+              stream: comeInBloc.events,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                return snapshot.hasData
+                    ? _buildEventList(snapshot.data)
+                    : Center(child: CircularProgressIndicator());
+              },
+            ),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.camera_alt),
-        label: Text("Scan"),
-        onPressed: _scanQR,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
