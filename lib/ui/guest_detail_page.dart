@@ -26,7 +26,8 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
       var pngBytes = byteData.buffer.asUint8List();
       var bs64 = base64Encode(pngBytes);
       debugPrint(bs64.length.toString());
-      Share.file('qrcode', 'qr_code.png', pngBytes.buffer.asUint8List(), 'image/png');
+      Share.file(
+          'qrcode', 'qr_code.png', pngBytes.buffer.asUint8List(), 'image/png');
     } catch (exception) {}
   }
 
@@ -74,6 +75,16 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
     );
   }
 
+  Widget _buildShareButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        _getQRCodeImage();
+      },
+      child: Icon(Icons.share),
+      tooltip: 'Share QR code',
+    );
+  }
+
   Widget build(BuildContext context) {
     var guestFullName = widget.guest.firstName + ' ' + widget.guest.lastName;
     return Scaffold(
@@ -87,25 +98,34 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
         ],
       ),
       body: Container(
-        child: Column(
+        child: Stack(
           children: [
-            _builGuestDetail(),
-            SizedBox(
-              height: 220,
-            ),
-            GestureDetector(
-              onTap: () {
-                _getQRCodeImage();
-              },
-              child: RepaintBoundary(
-                key: _renderObjectKey,
-                child: QrImage(
-                  data: widget.guest.id,
-                  size: 200,
-                  backgroundColor: Colors.white,
+            Column(
+              children: [
+                _builGuestDetail(),
+                SizedBox(
+                  height: 220,
                 ),
-              ),
+                GestureDetector(
+                  onTap: () {
+                    _getQRCodeImage();
+                  },
+                  child: RepaintBoundary(
+                    key: _renderObjectKey,
+                    child: QrImage(
+                      data: widget.guest.id,
+                      size: 200,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
+            Positioned(
+              top: 530,
+              left: 280,
+              child: _buildShareButton(),
+            )
           ],
         ),
       ),
