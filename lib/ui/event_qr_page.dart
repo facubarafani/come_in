@@ -14,6 +14,7 @@ class EventQRPage extends StatefulWidget {
 
 class _EventQRPageState extends State<EventQRPage> {
   @override
+  var _cardColor;
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
   String result = "";
   Future _scanQR() async {
@@ -21,7 +22,6 @@ class _EventQRPageState extends State<EventQRPage> {
     try {
       String qrResult = await BarcodeScanner.scan();
       setState(() {
-        // result = qrResult;
         _database
             .child('events')
             .child(_key)
@@ -31,8 +31,10 @@ class _EventQRPageState extends State<EventQRPage> {
             .then((snapshot) {
           if (snapshot.value == null) {
             result = ('The QR code is invalid');
+            _cardColor = Colors.red;
           } else {
             result = ('QR code validated successfully');
+            _cardColor = Colors.green;
           }
         });
       });
@@ -57,19 +59,31 @@ class _EventQRPageState extends State<EventQRPage> {
     }
   }
 
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(widget.event.title),
-      ),
-      body: Center(
+  Widget _buildValidationCard() {
+    return result != ''
+    ? Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      color: _cardColor,
+      margin: EdgeInsets.all(8),
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
         child: Text(
           result,
           textAlign: TextAlign.center,
           style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
         ),
       ),
+    )
+    : Text('');
+  }
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(widget.event.title),
+      ),
+      body: Center(child: _buildValidationCard()),
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.camera_alt),
         label: Text("Scan"),
