@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui';
 import 'package:come_in/models/guest.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:share/share.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 
 class GuestDetailPage extends StatefulWidget {
   final Guest guest;
@@ -11,6 +15,21 @@ class GuestDetailPage extends StatefulWidget {
 }
 
 class _GuestDetailPageState extends State<GuestDetailPage> {
+  final GlobalKey _renderObjectKey = new GlobalKey();
+
+  Future<void> _getQRCodeImage() async {
+    try {
+      RenderRepaintBoundary boundary =
+          _renderObjectKey.currentContext.findRenderObject();
+      var image = await boundary.toImage();
+      ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
+      var pngBytes = byteData.buffer.asUint8List();
+      var bs64 = base64Encode(pngBytes);
+      debugPrint(bs64.length.toString());
+      Share.file('qrcode', 'qr_code.png', pngBytes.buffer.asUint8List(), 'image/png');
+    } catch (exception) {}
+  }
+
   @override
   Widget _builGuestDetail() {
     return Card(
@@ -76,12 +95,15 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
             ),
             GestureDetector(
               onTap: () {
-                
+                _getQRCodeImage();
               },
-              child: QrImage(
-                data: widget.guest.id,
-                size: 200,
-                backgroundColor: Colors.white,
+              child: RepaintBoundary(
+                key: _renderObjectKey,
+                child: QrImage(
+                  data: widget.guest.id,
+                  size: 200,
+                  backgroundColor: Colors.white,
+                ),
               ),
             ),
           ],

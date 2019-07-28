@@ -30,9 +30,9 @@ class _EventQRPageState extends State<EventQRPage> {
             .once()
             .then((snapshot) {
           if (snapshot.value == null) {
-            result = ('The QR Code is invalid');
+            result = ('The QR code is invalid');
           } else {
-            result = ('QR Code validated successfully');
+            result = ('QR code validated successfully');
           }
         });
       });
@@ -66,6 +66,7 @@ class _EventQRPageState extends State<EventQRPage> {
       body: Center(
         child: Text(
           result,
+          textAlign: TextAlign.center,
           style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
         ),
       ),
