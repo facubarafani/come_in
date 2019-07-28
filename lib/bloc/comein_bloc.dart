@@ -37,6 +37,10 @@ class ComeInBloc {
     });
   }
 
+  Future removeEvent(String id) async {
+    _database.child('events').child(id).remove();
+  }
+
   dispose() {
     _subject.close();
     this.dispose();

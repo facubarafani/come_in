@@ -196,6 +196,8 @@ class _EventDetailPageState extends State<EventDetailPage> {
 
   Widget build(BuildContext context) {
     GuestBloc guestBloc = ComeInProvider.of(context).guestBloc;
+    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+        GlobalKey<RefreshIndicatorState>();
     guestBloc.getGuest(widget.event.id);
     return Scaffold(
       appBar: AppBar(

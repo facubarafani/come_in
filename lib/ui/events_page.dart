@@ -78,7 +78,8 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     ComeInBloc comeInBloc = ComeInProvider.of(context).comeInBloc;
-
+    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+        GlobalKey<RefreshIndicatorState>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -88,13 +89,17 @@ class _EventPageState extends State<EventPage> {
           onPressed: () {},
         ),
       ),
-      body: StreamBuilder(
-        stream: comeInBloc.events,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return snapshot.hasData
-              ? _buildEventList(snapshot.data)
-              : Center(child: CircularProgressIndicator());
-        },
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: comeInBloc.getEvents,
+        child: StreamBuilder(
+          stream: comeInBloc.events,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return snapshot.hasData
+                ? _buildEventList(snapshot.data)
+                : Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Create an event',

@@ -17,9 +17,20 @@ class GuestBloc {
   Future getGuest(String id) async {
     _database.child('events').child(id).child('guests').once().then((snapshot) {
       List<Guest> list = [];
-      snapshot.value.forEach((key, value) => list.add(Guest.fromJson(value)));
-      _subject.sink.add(list);
+      if (snapshot.value != null) {
+        snapshot.value.forEach((key, value) => list.add(Guest.fromJson(value)));
+        _subject.sink.add(list);
+      } else {}
     });
+  }
+
+  Future removeGuest(String eventId, String guestId) async {
+    _database
+        .child('events')
+        .child(eventId)
+        .child('guests')
+        .child(guestId)
+        .remove();
   }
 
   dispose() {
