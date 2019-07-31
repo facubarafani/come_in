@@ -21,6 +21,7 @@ class _EventPageState extends State<EventPage> {
   }
 
   Widget _buildEventList(List<ComeInEvent> list) {
+    ComeInBloc comeInBloc = ComeInProvider.of(context).comeInBloc;
     return ListView.builder(
       itemCount: list.length,
       itemBuilder: (BuildContext context, int index) {
@@ -36,36 +37,51 @@ class _EventPageState extends State<EventPage> {
                 ),
               );
             },
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              margin: EdgeInsets.all(15),
-              child: Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Wrap(
-                  children: [
-                    Text(
-                      '${events.title}',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Divider(),
-                    Text('${events.description}'),
-                    Divider(),
-                    Row(
-                      children: [
-                        Icon(Icons.location_on),
-                        Text('${events.location}'),
-                      ],
-                    ),
-                    Divider(),
-                    Row(
-                      children: [
-                        Icon(Icons.calendar_today),
-                        Text('Event date will appear here'),
-                      ],
-                    )
-                  ],
+            child: Dismissible(
+              background: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Icon(Icons.delete_forever,size: 40,),
+                )],
+              ),
+              direction: DismissDirection.endToStart,
+              key: Key(events.id),
+              onDismissed: (direction) {
+                comeInBloc.removeEvent(events.id);
+                list.removeAt(index);
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                margin: EdgeInsets.all(15),
+                child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Wrap(
+                    children: [
+                      Text(
+                        '${events.title}',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Divider(),
+                      Text('${events.description}'),
+                      Divider(),
+                      Row(
+                        children: [
+                          Icon(Icons.location_on),
+                          Text('${events.location}'),
+                        ],
+                      ),
+                      Divider(),
+                      Row(
+                        children: [
+                          Icon(Icons.calendar_today),
+                          Text('Event date will appear here'),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

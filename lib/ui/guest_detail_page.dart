@@ -27,7 +27,9 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
       var bs64 = base64Encode(pngBytes);
       debugPrint(bs64.length.toString());
       Share.file(
-          'qrcode', 'qr_code.png', pngBytes.buffer.asUint8List(), 'image/png');
+          'Share QR Code', 'qr_code.png', pngBytes.buffer.asUint8List(), 'image/png',
+          text:
+              'You were invited to my event! The following QR code will provide you access to the event.');
     } catch (exception) {}
   }
 
