@@ -5,7 +5,13 @@ import 'package:rxdart/rxdart.dart';
 class GuestBloc {
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
   final _subject = BehaviorSubject<List<Guest>>();
+  final _subjectIsLoading = BehaviorSubject<bool>();
   Stream<List<Guest>> get guests => _subject.stream;
+  Stream<bool> get isLoading => _subjectIsLoading.stream;
+
+  GuestBloc(){
+    _subjectIsLoading.sink.add(true);
+  }
 
   Future createGuest(firstName, lastName, String id) async {
     _database.child('events').child(id).child('guests').push().set({
@@ -19,8 +25,12 @@ class GuestBloc {
       List<Guest> list = [];
       if (snapshot.value != null) {
         snapshot.value.forEach((key, value) => list.add(Guest.fromJson(value)));
+        _subjectIsLoading.sink.add(null);
         _subject.sink.add(list);
-      } else {}
+      } else {
+        _subjectIsLoading.sink.add(null);
+        _subject.sink.add(null);
+      }
     });
   }
 
@@ -35,6 +45,7 @@ class GuestBloc {
 
   dispose() {
     _subject.close();
+    _subjectIsLoading.close();
     this.dispose();
   }
 }

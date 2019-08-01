@@ -221,7 +221,14 @@ class _EventDetailPageState extends State<EventDetailPage> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 return snapshot.hasData
                     ? _buildGuest(snapshot.data)
-                    : Center(child: CircularProgressIndicator());
+                    : StreamBuilder(
+                      stream: guestBloc.isLoading,
+                      builder: (BuildContext context, AsyncSnapshot snapshot){
+                        return (snapshot.hasData)
+                        ? Center(child: CircularProgressIndicator(),)
+                        : Center(child:Text('No guests added yet'));
+                      },
+                    );
               },
             ),
           ),
