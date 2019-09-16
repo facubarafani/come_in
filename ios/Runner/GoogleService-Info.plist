@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>296288556724-huhs1ien4i6fitc46q33nsofjvhjrqsd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.296288556724-huhs1ien4i6fitc46q33nsofjvhjrqsd</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAQSXbTIYH_YbAOnTshLDT6FNxkHm6rHgE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>296288556724</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.company.comeIn</string>
+	<key>PROJECT_ID</key>
+	<string>comein-d6eca</string>
+	<key>STORAGE_BUCKET</key>
+	<string>comein-d6eca.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:296288556724:ios:bef765cb0476102f56a9e1</string>
+	<key>DATABASE_URL</key>
+	<string>https://comein-d6eca.firebaseio.com</string>
+</dict>
+</plist>
