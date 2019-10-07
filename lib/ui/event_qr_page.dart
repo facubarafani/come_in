@@ -1,6 +1,5 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:come_in/bloc/guest_bloc.dart';
-import 'dart:convert' as JSON;
 import 'package:come_in/models/event.dart';
 import 'package:come_in/models/guest.dart';
 import 'package:come_in/providers/comein_provider.dart';
@@ -10,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EventQRPage extends StatefulWidget {
-  @override
+
   final ComeInEvent event;
   EventQRPage({Key key, this.event}) : super(key: key);
   _EventQRPageState createState() => _EventQRPageState();
 }
 
 class _EventQRPageState extends State<EventQRPage> {
-  @override
+
   var _cardColor;
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
   String result = "";

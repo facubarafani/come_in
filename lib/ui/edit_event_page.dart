@@ -16,6 +16,7 @@ class _EditEventPageState extends State<EditEventPage> {
   final _editDescriptionController = TextEditingController();
   final _editLocationController = TextEditingController();
   void initState() {
+    super.initState();
     _editTitleController..text = widget.event.title;
     _editDescriptionController..text = widget.event.description;
     _editLocationController..text = widget.event.location;

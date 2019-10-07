@@ -16,6 +16,7 @@ class EventPage extends StatefulWidget {
 
 class _EventPageState extends State<EventPage> {
   void initState() {
+    super.initState();
     final DatabaseReference _database = FirebaseDatabase.instance.reference();
     _database.child('events').onChildAdded.listen((snapshot) {
       _database.child('events').child(snapshot.snapshot.key).update({

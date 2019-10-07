@@ -2,8 +2,6 @@ import 'package:come_in/bloc/comein_bloc.dart';
 import 'package:come_in/models/event.dart';
 import 'package:come_in/providers/comein_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:barcode_scan/barcode_scan.dart';
-import 'package:flutter/services.dart';
 
 import 'event_qr_page.dart';
 
@@ -17,7 +15,7 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  @override
+  
   Widget _buildEventList(List<ComeInEvent> list) {
     return ListView.builder(
       itemCount: list.length,

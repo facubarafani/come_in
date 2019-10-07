@@ -20,6 +20,7 @@ class EventDetailPage extends StatefulWidget {
 class _EventDetailPageState extends State<EventDetailPage> {
   @override
   void initState() {
+    super.initState();
     final DatabaseReference _database = FirebaseDatabase.instance.reference();
     _database
         .child('events')

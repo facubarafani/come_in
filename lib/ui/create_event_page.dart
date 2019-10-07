@@ -12,22 +12,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
+  TextEditingController _dateController = TextEditingController();
   var selectedDate;
-
-  void _showDatePicker() {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoDatePicker(
-            onDateTimeChanged: (DateTime value) {
-              setState(() {});
-            },
-            initialDateTime: DateTime.now(),
-            mode: CupertinoDatePickerMode.date,
-            maximumYear: 2020,
-          );
-        });
-  }
 
   Widget _buildEventForm() {
     return Form(
@@ -87,15 +73,19 @@ class _CreateEventPageState extends State<CreateEventPage> {
                       return Container(
                         height:
                             MediaQuery.of(context).copyWith().size.height / 3,
-                        child: CupertinoDatePicker(
-                          initialDateTime: DateTime.now(),
-                          onDateTimeChanged: (DateTime newdate) {
-                            print(newdate);
-                          },
-                          use24hFormat: true,
-                          minimumYear: DateTime.now().year,
-                          minuteInterval: 1,
-                          mode: CupertinoDatePickerMode.dateAndTime,
+                        child: Theme(
+                          data: ThemeData.light(),
+                          child: CupertinoDatePicker(
+                            initialDateTime: DateTime.now(),
+                            onDateTimeChanged: (DateTime newdate) {
+                              selectedDate = newdate;
+                              _dateController..text = selectedDate.toString();
+                            },
+                            use24hFormat: true,
+                            minimumYear: DateTime.now().year,
+                            minuteInterval: 1,
+                            mode: CupertinoDatePickerMode.dateAndTime,
+                          ),
                         ),
                       );
                     });
@@ -104,6 +94,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                 child: Container(
                   padding: EdgeInsets.only(top: 16),
                   child: TextField(
+                    controller: _dateController,
                     decoration: InputDecoration(
                       hintText: 'Event Date',
                       contentPadding: EdgeInsets.all(8),
