@@ -9,6 +9,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'add_guest_page.dart';
 import 'edit_event_page.dart';
+import 'package:intl/intl.dart';
 
 class EventDetailPage extends StatefulWidget {
   final ComeInEvent event;
@@ -18,6 +19,8 @@ class EventDetailPage extends StatefulWidget {
 }
 
 class _EventDetailPageState extends State<EventDetailPage> {
+  
+  var formatter = DateFormat('yMd');
   @override
   void initState() {
     super.initState();
@@ -40,6 +43,11 @@ class _EventDetailPageState extends State<EventDetailPage> {
   }
 
   Widget _buildEventDetail() {
+    var _eventDate = DateTime.parse(widget.event.date);
+    var formattedDate = formatter.format(_eventDate);
+    var _today = DateTime.now();
+    final difference = _eventDate.difference(_today).inDays;
+    print(difference);
     return Card(
       margin: EdgeInsets.all(10),
       elevation: 6,
@@ -85,7 +93,21 @@ class _EventDetailPageState extends State<EventDetailPage> {
                   style: TextStyle(color: Colors.grey, fontSize: 15),
                 ),
                 Text(
-                  widget.event.location,
+                  '${widget.event.location}',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+            Divider(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Event Date',
+                  style: TextStyle(color: Colors.grey, fontSize: 15),
+                ),
+                Text(
+                  formattedDate,
                   style: TextStyle(fontSize: 20),
                 ),
               ],

@@ -10,12 +10,13 @@ class ComeInBloc {
     getEvents();
   }
 
-  Future createEvent(title, description, location) async {
+  Future createEvent(title, description, location, date) async {
     _database.child('events').push().set(
       {
         'title': title,
         'description': description,
         'location': location,
+        'date': date,
       },
     );
   }

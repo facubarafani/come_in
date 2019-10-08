@@ -2,6 +2,7 @@ import 'package:come_in/bloc/comein_bloc.dart';
 import 'package:come_in/providers/comein_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CreateEventPage extends StatefulWidget {
   @override
@@ -13,7 +14,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
-  var selectedDate;
+  var selectedDate = DateTime.now();
+  var formatter = DateFormat('yMd');
 
   Widget _buildEventForm() {
     return Form(
@@ -79,12 +81,11 @@ class _CreateEventPageState extends State<CreateEventPage> {
                             initialDateTime: DateTime.now(),
                             onDateTimeChanged: (DateTime newdate) {
                               selectedDate = newdate;
-                              _dateController..text = selectedDate.toString();
+                              _dateController..text = formatter.format(selectedDate);
                             },
-                            use24hFormat: true,
                             minimumYear: DateTime.now().year,
-                            minuteInterval: 1,
-                            mode: CupertinoDatePickerMode.dateAndTime,
+                            minimumDate: DateTime.now(),
+                            mode: CupertinoDatePickerMode.date,
                           ),
                         ),
                       );
@@ -139,7 +140,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                     actions: [
                       CupertinoButton(
                         onPressed: () {
-                          comeInBloc.createEvent(title, description, location);
+                          comeInBloc.createEvent(title, description, location,selectedDate.toString());
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
                         },

@@ -67,7 +67,7 @@ class _EventPageState extends State<EventPage> {
                     Row(
                       children: [
                         Icon(Icons.calendar_today),
-                        Text('Event date will appear here'),
+                        Text('${events.date}'),
                       ],
                     )
                   ],
