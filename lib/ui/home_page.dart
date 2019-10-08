@@ -15,51 +15,43 @@ class HomePage extends StatefulWidget {
 
 Widget _buildEventList(List<ComeInEvent> list) {
   return SizedBox(
-    height: 200,
-    child: ListView.builder(
-      itemCount: list.length,
-      itemBuilder: (BuildContext context, int index) {
-        ComeInEvent events = list[index];
-        var _eventDate = DateTime.parse(events.date);
-        var _today = DateTime.now();
-        final difference = _eventDate.difference(_today).inDays;
-        return (difference <= 7 && difference >= 0)
-            ? _buildUpcomingEvent(events, difference)
-            : Container();
-      },
+    height: 1000,
+      child: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (BuildContext context, int index) {
+          ComeInEvent events = list[index];
+          var _eventDate = DateTime.parse(events.date);
+          var _today = DateTime.now();
+          final difference = _eventDate.difference(_today).inDays;
+          return (difference <= 7 && difference >= 0)
+              ? _buildUpcomingEvent(events, difference)
+              : Container();
+        },
     ),
   );
 }
 
 Widget _buildEventCard(context) {
   ComeInBloc comeInBloc = ComeInProvider.of(context).comeInBloc;
-  return Column(
-    children: [
-      Card(
-        margin: EdgeInsets.all(15),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Wrap(
-            children: [
-              Text(
-                'Upcoming events',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              Divider(),
-              StreamBuilder(
-                stream: comeInBloc.events,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return snapshot.hasData
-                      ? _buildEventList(snapshot.data)
-                      : Center(child: CircularProgressIndicator());
-                },
-              ),
-            ],
-          ),
-        ),
-      )
-    ],
+  return Padding(
+    padding: EdgeInsets.all(12),
+      child: Column(
+      children: [
+                Text(
+                  'Upcoming events',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                Divider(),
+                StreamBuilder(
+                  stream: comeInBloc.events,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return snapshot.hasData
+                        ? _buildEventList(snapshot.data)
+                        : Center(child: CircularProgressIndicator());
+                  },
+                ),
+              ],
+    ),
   );
 }
 
