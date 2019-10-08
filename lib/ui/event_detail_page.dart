@@ -45,9 +45,6 @@ class _EventDetailPageState extends State<EventDetailPage> {
   Widget _buildEventDetail() {
     var _eventDate = DateTime.parse(widget.event.date);
     var formattedDate = formatter.format(_eventDate);
-    var _today = DateTime.now();
-    final difference = _eventDate.difference(_today).inDays;
-    print(difference);
     return Card(
       margin: EdgeInsets.all(10),
       elevation: 6,

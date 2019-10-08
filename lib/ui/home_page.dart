@@ -23,7 +23,7 @@ Widget _buildEventList(List<ComeInEvent> list) {
         var _eventDate = DateTime.parse(events.date);
         var _today = DateTime.now();
         final difference = _eventDate.difference(_today).inDays;
-        return (difference <= 7)
+        return (difference <= 7 && difference >= 0)
             ? _buildUpcomingEvent(events, difference)
             : Container();
       },
@@ -67,17 +67,16 @@ Widget _buildUpcomingEvent(ComeInEvent event, difference) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Row(children: [
-        Text(
-          event.title,
-          style: TextStyle(fontSize: 18),
-        ),
-        Spacer(),
-        Chip(
-          backgroundColor: Colors.grey,
-          label: Text('Days left: $difference'),
-        ),
-      ]),
+      Row(
+        children: [
+          Text(
+            event.title,
+            style: TextStyle(fontSize: 18),
+          ),
+          Spacer(),
+          _buildDaysLeftChip(difference),
+        ],
+      ),
       Column(
         children: [
           Text(
@@ -89,6 +88,18 @@ Widget _buildUpcomingEvent(ComeInEvent event, difference) {
       Divider(),
     ],
   );
+}
+
+Widget _buildDaysLeftChip(difference) {
+  return (difference != 0)
+          ? Chip(
+          backgroundColor: Colors.grey,
+          label: Text('Days left: $difference'),
+        )
+        : Chip(
+          backgroundColor: Colors.blue,
+          label: Text('Today'),
+        );
 }
 
 class _HomePageState extends State<HomePage> {

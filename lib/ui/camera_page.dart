@@ -2,7 +2,6 @@ import 'package:come_in/bloc/comein_bloc.dart';
 import 'package:come_in/models/event.dart';
 import 'package:come_in/providers/comein_provider.dart';
 import 'package:flutter/material.dart';
-
 import 'event_qr_page.dart';
 
 class CameraPage extends StatefulWidget {
@@ -15,6 +14,8 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
+  
+
   
   Widget _buildEventList(List<ComeInEvent> list) {
     return ListView.builder(
@@ -58,7 +59,7 @@ class _CameraPageState extends State<CameraPage> {
                     Row(
                       children: [
                         Icon(Icons.calendar_today),
-                        Text('Event date will appear here'),
+                        Text('${events.date}'),
                       ],
                     )
                   ],

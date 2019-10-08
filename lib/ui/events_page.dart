@@ -4,6 +4,7 @@ import 'package:come_in/bloc/comein_bloc.dart';
 import 'package:come_in/models/event.dart';
 import 'package:come_in/providers/comein_provider.dart';
 import 'event_detail_page.dart';
+import 'package:intl/intl.dart';
 
 class EventPage extends StatefulWidget {
   final PageController controller;
@@ -15,6 +16,9 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
+
+  var formatter = DateFormat('yMd');
+
   void initState() {
     super.initState();
     final DatabaseReference _database = FirebaseDatabase.instance.reference();
@@ -30,6 +34,8 @@ class _EventPageState extends State<EventPage> {
       itemCount: list.length,
       itemBuilder: (BuildContext context, int index) {
         ComeInEvent events = list[index];
+        var _eventDate = DateTime.parse(events.date);
+        var formattedDate = formatter.format(_eventDate);
         return Container(
           child: GestureDetector(
             onTap: () {
@@ -67,7 +73,7 @@ class _EventPageState extends State<EventPage> {
                     Row(
                       children: [
                         Icon(Icons.calendar_today),
-                        Text('${events.date}'),
+                        Text('${formattedDate}'),
                       ],
                     )
                   ],
@@ -92,7 +98,8 @@ class _EventPageState extends State<EventPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            widget.controller.animateToPage(1,duration: Duration(milliseconds: 500),curve:Curves.ease);
+            widget.controller.animateToPage(1,
+                duration: Duration(milliseconds: 500), curve: Curves.ease);
           },
         ),
       ),
