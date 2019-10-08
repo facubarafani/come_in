@@ -1,3 +1,6 @@
+import 'package:come_in/bloc/comein_bloc.dart';
+import 'package:come_in/models/event.dart';
+import 'package:come_in/providers/comein_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +13,26 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-Widget _buildEventCard() {
+Widget _buildEventList(List<ComeInEvent> list) {
+  return SizedBox(
+    height: 200,
+    child: ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (BuildContext context, int index) {
+        ComeInEvent events = list[index];
+        var _eventDate = DateTime.parse(events.date);
+        var _today = DateTime.now();
+        final difference = _eventDate.difference(_today).inDays;
+        return (difference <= 7)
+            ? _buildUpcomingEvent(events, difference)
+            : Container();
+      },
+    ),
+  );
+}
+
+Widget _buildEventCard(context) {
+  ComeInBloc comeInBloc = ComeInProvider.of(context).comeInBloc;
   return Column(
     children: [
       Card(
@@ -22,13 +44,49 @@ Widget _buildEventCard() {
             children: [
               Text(
                 'Upcoming events',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              Divider()
+              Divider(),
+              StreamBuilder(
+                stream: comeInBloc.events,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  return snapshot.hasData
+                      ? _buildEventList(snapshot.data)
+                      : Center(child: CircularProgressIndicator());
+                },
+              ),
             ],
           ),
         ),
       )
+    ],
+  );
+}
+
+Widget _buildUpcomingEvent(ComeInEvent event, difference) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(children: [
+        Text(
+          event.title,
+          style: TextStyle(fontSize: 18),
+        ),
+        Spacer(),
+        Chip(
+          backgroundColor: Colors.grey,
+          label: Text('Days left: $difference'),
+        ),
+      ]),
+      Column(
+        children: [
+          Text(
+            'Description: ${event.description}',
+            style: TextStyle(fontSize: 14),
+          ),
+        ],
+      ),
+      Divider(),
     ],
   );
 }
@@ -41,14 +99,16 @@ class _HomePageState extends State<HomePage> {
         leading: IconButton(
           icon: Icon(Icons.camera_alt),
           onPressed: () {
-            widget.controller.animateToPage(0,duration: Duration(milliseconds: 500),curve:Curves.ease);
+            widget.controller.animateToPage(0,
+                duration: Duration(milliseconds: 500), curve: Curves.ease);
           },
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.list),
             onPressed: () {
-              widget.controller.animateToPage(2,duration: Duration(milliseconds: 500),curve:Curves.ease);
+              widget.controller.animateToPage(2,
+                  duration: Duration(milliseconds: 500), curve: Curves.ease);
             },
           )
         ],
@@ -57,7 +117,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(
         children: [
-          _buildEventCard(),
+          _buildEventCard(context),
         ],
       ),
     );
