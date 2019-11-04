@@ -12,11 +12,11 @@ El organizador puede agregar a los invitados a sus respectivos eventos y a cada 
 ## Capturas de pantalla
 Vista eventos próximos            |  Vista detallada de un evento
 :-------------------------:|:-------------------------:
-<img src="./img/upcomingevents.png" alt="drawing" width="300"/>  |  <img src="./img/eventview.png" alt="drawing" width="300"/>  
+<img src="./img/upcomingevents.PNG" alt="drawing" width="300"/>  |  <img src="./img/eventview.PNG" alt="drawing" width="300"/>  
 
 Vista de la lista de eventos            |  Vista detallada de un invitado
 :-------------------------:|:-------------------------:
-<img src="./img/eventlist.png" alt="drawing" width="300"/>  |  <img src="./img/guestview.png" alt="drawing" width="300"/>  
+<img src="./img/eventlist.PNG" alt="drawing" width="300"/>  |  <img src="./img/guestview.PNG" alt="drawing" width="300"/>  
 
 
 
