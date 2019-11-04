@@ -18,7 +18,7 @@ class GuestBloc {
       'firstName': firstName,
       'lastName': lastName,
       'hasEntered': false,
-      'entryAt': null,
+      'entryAt': 'no_entry',
     });
   }
 

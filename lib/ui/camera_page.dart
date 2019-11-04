@@ -3,6 +3,7 @@ import 'package:come_in/models/event.dart';
 import 'package:come_in/providers/comein_provider.dart';
 import 'package:flutter/material.dart';
 import 'event_qr_page.dart';
+import 'package:intl/intl.dart' as intl;
 
 class CameraPage extends StatefulWidget {
   final PageController controller;
@@ -14,14 +15,14 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  
-
-  
+    var formatter = intl.DateFormat('yMd');
   Widget _buildEventList(List<ComeInEvent> list) {
     return ListView.builder(
       itemCount: list.length,
       itemBuilder: (BuildContext context, int index) {
         ComeInEvent events = list[index];
+        var _eventDate = DateTime.parse(events.date);
+        var formattedDate = formatter.format(_eventDate);
         return Container(
           child: GestureDetector(
             onTap: () {
@@ -59,7 +60,7 @@ class _CameraPageState extends State<CameraPage> {
                     Row(
                       children: [
                         Icon(Icons.calendar_today),
-                        Text('${events.date}'),
+                        Text('$formattedDate'),
                       ],
                     )
                   ],
@@ -82,7 +83,8 @@ class _CameraPageState extends State<CameraPage> {
         actions: [
           IconButton(
             onPressed: () {
-              widget.controller.animateToPage(1,duration: Duration(milliseconds: 500),curve:Curves.ease);
+              widget.controller.animateToPage(1,
+                  duration: Duration(milliseconds: 500), curve: Curves.ease);
             },
             icon: Icon(
               Icons.arrow_back_ios,

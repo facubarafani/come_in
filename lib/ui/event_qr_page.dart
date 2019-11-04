@@ -9,14 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EventQRPage extends StatefulWidget {
-
   final ComeInEvent event;
   EventQRPage({Key key, this.event}) : super(key: key);
   _EventQRPageState createState() => _EventQRPageState();
 }
 
 class _EventQRPageState extends State<EventQRPage> {
-
   var _cardColor;
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
   String result = "";
@@ -55,11 +53,12 @@ class _EventQRPageState extends State<EventQRPage> {
                 .child('guests')
                 .child(qrResult)
                 .update({
-              'entryAt': DateTime.now(),
+              'entryAt': DateTime.now().toString(),
             });
           }
         });
       });
+      createSnackBar(result);
     } on PlatformException catch (ex) {
       if (ex.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
@@ -81,25 +80,25 @@ class _EventQRPageState extends State<EventQRPage> {
     }
   }
 
-  Widget _buildValidationCard() {
-    return result != ''
-        ? Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            color: _cardColor,
-            margin: EdgeInsets.all(8),
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                result,
-                textAlign: TextAlign.center,
-                style:
-                    new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-          )
-        : Text('');
-  }
+  // Widget _buildValidationCard() {
+  //   return result != ''
+  //       ? Card(
+  //           shape:
+  //               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+  //           color: _cardColor,
+  //           margin: EdgeInsets.all(8),
+  //           child: Padding(
+  //             padding: EdgeInsets.all(8.0),
+  //             child: Text(
+  //               result,
+  //               textAlign: TextAlign.center,
+  //               style:
+  //                   new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+  //             ),
+  //           ),
+  //         )
+  //       : Text('');
+  // }
 
   _buildGuest(List data) {
     return ListView.builder(
@@ -107,56 +106,63 @@ class _EventQRPageState extends State<EventQRPage> {
       itemBuilder: (BuildContext context, int index) {
         Guest guests = data[index];
         return (guests.hasEntered == true)
-        ? Container(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => GuestDetailPage(
-                    guest: data[index],
+            ? Container(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => GuestDetailPage(
+                          guest: data[index],
+                        ),
+                      ),
+                    );
+                  },
+                  child: Card(
+                    margin: EdgeInsets.all(6),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    elevation: 6,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.person),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                guests.firstName,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                guests.lastName,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              );
-            },
-            child: Card(
-              margin: EdgeInsets.all(6),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              elevation: 6,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.person),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          guests.firstName,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          guests.lastName,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        )
-        : Container();
+              )
+            : Container();
       },
     );
+  }
+
+  void createSnackBar(String message) {
+    final snackBar =
+        new SnackBar(content: new Text(result), backgroundColor: Colors.black);
+
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 
   Widget build(BuildContext context) {
@@ -197,9 +203,9 @@ class _EventQRPageState extends State<EventQRPage> {
             },
           ),
         ),
-        Center(
-          child: _buildValidationCard(),
-        ),
+        // Center(
+        //   child: _buildValidationCard(),
+        // ),
       ]),
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.camera_alt),

@@ -10,17 +10,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:intl/intl.dart';
 
 class GuestDetailPage extends StatefulWidget {
   final Guest guest;
   final ComeInEvent event;
-  GuestDetailPage({Key key, this.guest,this.event}) : super(key: key);
+  GuestDetailPage({Key key, this.guest, this.event}) : super(key: key);
   @override
   _GuestDetailPageState createState() => _GuestDetailPageState();
 }
 
 class _GuestDetailPageState extends State<GuestDetailPage> {
   final GlobalKey _renderObjectKey = new GlobalKey();
+  var formatter = DateFormat('yMd');
+  var timeFormatter = DateFormat('Hms');
 
   Future<void> _getQRCodeImage() async {
     try {
@@ -39,7 +42,7 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
   }
 
   Widget _buildEntryAt(Guest guest) {
-    return (guest.entryAt != null)
+    return (guest.entryAt != 'no_entry')
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -48,7 +51,7 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
                 style: TextStyle(color: Colors.grey, fontSize: 15),
               ),
               Text(
-                widget.guest.entryAt,
+                '${formatter.format(DateTime.parse(guest.entryAt))} a las ${timeFormatter.format(DateTime.parse(guest.entryAt))}',
                 style: TextStyle(fontSize: 20),
               ),
             ],
@@ -147,7 +150,8 @@ class _GuestDetailPageState extends State<GuestDetailPage> {
                               style: TextStyle(color: Colors.red),
                             ),
                             onPressed: () {
-                              guestBloc.removeGuest(widget.event.id,widget.guest.id);
+                              guestBloc.removeGuest(
+                                  widget.event.id, widget.guest.id);
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
                             },
