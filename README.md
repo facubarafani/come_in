@@ -1,16 +1,30 @@
-# come_in
+# <img src="./img/appiconx2.png" alt="drawing" width="40"/>     come_in
 
-A new Flutter project.
+Proyecto de aplicacion movil para Aplicación de Nuevas Tecnologias 7 C 2019
 
-## Getting Started
+* **Alumno: BARAFANI**, Facundo
+* **Docente: GUIGNARD**, Javier
 
-This project is a starting point for a Flutter application.
+## Acerca de come_in
+> come_in es una aplicación para la organizacion del ingreso a eventos, ya sea para eventos privados o para eventos de gran magnitud el cual consta de un sistema de ingreso mediante codigo QR.
+El organizador puede agregar a los invitados a sus respectivos eventos y a cada uno de ellos se les genera un codigo QR con el cual podran ingresar el evento, el cual estara monitoreado con la funcion de la aplicación para escanear los codigos y asi verficar el ingreso de dicho invitado.
 
-A few resources to get you started if this is your first Flutter project:
+## Capturas de pantalla
+Vista eventos proximos            |  Vista detallada de un evento
+:-------------------------:|:-------------------------:
+<img src="./img/upcomingevents.png" alt="drawing" width="300"/>  |  <img src="./img/eventview.png" alt="drawing" width="300"/>  
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Vista de la lista de eventos            |  Vista detallada de un invitado
+:-------------------------:|:-------------------------:
+<img src="./img/eventlist.png" alt="drawing" width="300"/>  |  <img src="./img/guestview.png" alt="drawing" width="300"/>  
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+## Herramientas utilizadas para su desarrollo
+| Recurso | Descripcion |
+| ----------- | ----------- |
+| Flutter | Framework de dart utilizado para el desarrollo de la app |
+| Dart | Lenguaje en el que esta desarrollada la app |
+| Firebase | Base de datos de la aplicación |
+
+### **Contacto:** facu1910@gmail.com
