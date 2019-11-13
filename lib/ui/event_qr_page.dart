@@ -5,8 +5,10 @@ import 'package:come_in/models/guest.dart';
 import 'package:come_in/providers/comein_provider.dart';
 import 'package:come_in/ui/guest_detail_page.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class EventQRPage extends StatefulWidget {
   final ComeInEvent event;
@@ -15,9 +17,10 @@ class EventQRPage extends StatefulWidget {
 }
 
 class _EventQRPageState extends State<EventQRPage> {
-  var _cardColor;
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
   String result = "";
+  var formatter = DateFormat('yMd');
+  var timeFormatter = DateFormat('Hms');
   Future _scanQR() async {
     var _key = widget.event.id;
     try {
@@ -32,13 +35,107 @@ class _EventQRPageState extends State<EventQRPage> {
             .then((snapshot) {
           if (snapshot.value == null) {
             result = ('The QR code is invalid');
-            _cardColor = Colors.red;
+
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return CupertinoAlertDialog(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.cancel,
+                        color: Colors.red,
+                      ),
+                      Text('QR Code scanned'),
+                    ],
+                  ),
+                  content: Column(
+                    children: [
+                      Divider(),
+                      Text(
+                        '$result',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    CupertinoButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'OK',
+                      ),
+                    )
+                  ],
+                );
+              },
+            );
           } else {
             Guest guest = Guest.fromJson(snapshot.value);
-            result = ('QR code validated successfully ${guest.firstName}' +
-                ' ' +
-                '${guest.lastName}');
-            _cardColor = Colors.green;
+            result = 'QR code validated successfully';
+
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return CupertinoAlertDialog(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      ),
+                      Text('QR Code scanned'),
+                    ],
+                  ),
+                  content: Column(
+                    children: [
+                      Divider(),
+                      Text(
+                        '$result',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.person,
+                            size: 30,
+                          ),
+                          Text(
+                            '${guest.firstName} ${guest.lastName}',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.timer),
+                          Text(
+                              '${formatter.format(DateTime.parse(guest.entryAt))} a las ${timeFormatter.format(DateTime.parse(guest.entryAt))}',style: TextStyle(fontSize: 16),)
+                        ],
+                      )
+                    ],
+                  ),
+                  actions: [
+                    CupertinoButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'OK',
+                      ),
+                    )
+                  ],
+                );
+              },
+            );
+
             _database
                 .child('events')
                 .child(_key)
@@ -58,7 +155,6 @@ class _EventQRPageState extends State<EventQRPage> {
           }
         });
       });
-      createSnackBar(result);
     } on PlatformException catch (ex) {
       if (ex.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
@@ -156,13 +252,6 @@ class _EventQRPageState extends State<EventQRPage> {
             : Container();
       },
     );
-  }
-
-  void createSnackBar(String message) {
-    final snackBar =
-        new SnackBar(content: new Text(result), backgroundColor: Colors.black);
-
-    Scaffold.of(context).showSnackBar(snackBar);
   }
 
   Widget build(BuildContext context) {
