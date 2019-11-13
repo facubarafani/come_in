@@ -18,6 +18,9 @@ Vista de la lista de eventos            |  Vista detallada de un invitado
 :-------------------------:|:-------------------------:
 <img src="./img/eventlist.PNG" alt="drawing" width="300"/>  |  <img src="./img/guestview.PNG" alt="drawing" width="300"/>  
 
+Fallo al escanear QR          |  Escaneo exitoso de QR
+:-------------------------:|:-------------------------:
+<img src="./img/InvalidQRScan.gif" alt="drawing" width="300"/>  |  <img src="./img/ValidQRScan.gif" alt="drawing" width="300"/>  
 
 
 ## Herramientas utilizadas para su desarrollo
