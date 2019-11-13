@@ -8,7 +8,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class EventQRPage extends StatefulWidget {
   final ComeInEvent event;
@@ -19,8 +18,6 @@ class EventQRPage extends StatefulWidget {
 class _EventQRPageState extends State<EventQRPage> {
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
   String result = "";
-  var formatter = DateFormat('yMd');
-  var timeFormatter = DateFormat('Hms');
   Future _scanQR() async {
     var _key = widget.event.id;
     try {
@@ -112,14 +109,6 @@ class _EventQRPageState extends State<EventQRPage> {
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.timer),
-                          Text(
-                              '${formatter.format(DateTime.parse(guest.entryAt))} a las ${timeFormatter.format(DateTime.parse(guest.entryAt))}',style: TextStyle(fontSize: 16),)
-                        ],
-                      )
                     ],
                   ),
                   actions: [
