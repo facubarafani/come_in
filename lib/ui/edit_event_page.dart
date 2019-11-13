@@ -18,12 +18,14 @@ class _EditEventPageState extends State<EditEventPage> {
   final _editDescriptionController = TextEditingController();
   final _editLocationController = TextEditingController();
   final _editDateController = TextEditingController();
+  var selectedDate = DateTime.now();
+  var formatter = DateFormat('yMd');
   void initState() {
     super.initState();
     _editTitleController..text = widget.event.title;
     _editDescriptionController..text = widget.event.description;
     _editLocationController..text = widget.event.location;
-    _editDateController..text = widget.event.date;
+    _editDateController..text = formatter.format(DateTime.parse(widget.event.date));
   }
 
   @override
